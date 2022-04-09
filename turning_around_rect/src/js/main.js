@@ -29,7 +29,7 @@ function reset() {
   };
   char.xarea = [padding, canvas.width - padding - char.width];
   char.yarea = [padding, canvas.height - padding - char.height];
-  speed = (2 * (char.xarea[1] + char.yarea[1] - char.xarea[0] - char.yarea[0])) / (60 * secPerLap + 8);
+  speed = (2 * (char.xarea[1] + char.yarea[1] - char.xarea[0] - char.yarea[0])) / (60 * secPerLap);
   char.xspeed = speed;
 
   lapText = {
@@ -67,9 +67,6 @@ window.addEventListener("resize", reset);
 window.addEventListener("click", reset);
 reset();
 
-let prevTime = new Date().getTime();
-let time;
-
 function main() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   char.draw();
@@ -95,8 +92,6 @@ function main() {
     char.yspeed = 0;
     char.xspeed = speed;
     lapText.innerText = String(parseInt(lapText.innerText) + 1);
-    time = new Date().getTime();
-    console.log(time - prevTime);
     prevTime = time;
   }
 
