@@ -11,6 +11,7 @@ const bodypadding = 25;
 let char;
 let lapText;
 let timerText;
+let frameRateText;
 function reset() {
   canvas.width = window.innerWidth - bodypadding * 2;
   canvas.height = window.innerHeight - bodypadding * 2;
@@ -62,6 +63,21 @@ function reset() {
     },
   };
   timerText.innerText = "0";
+  frameRateText = {
+    x: canvas.width / 2,
+    y: canvas.height / 2 - 75,
+    innerText: "",
+    font: "32px serif",
+    color: "gray",
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.font = this.font;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "bottom";
+      ctx.fillText(this.innerText, this.x, this.y);
+    },
+  };
+  frameRateText.innerText = "0";
 }
 window.addEventListener("resize", reset);
 window.addEventListener("click", reset);
@@ -94,9 +110,11 @@ function main() {
     lapText.innerText = String(parseInt(lapText.innerText) + 1);
     prevTime = time;
   }
+  frameRateText.innerText = String(parseInt(frameRateText.innerText) + 1);
 
   lapText.draw();
   timerText.draw();
+  frameRateText.draw();
 }
 function perSec() {
   timerText.innerText = String(parseInt(timerText.innerText) + 1);
