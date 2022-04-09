@@ -1,7 +1,8 @@
 const canvas = document.querySelector("canvas#canvas");
 const ctx = canvas.getContext("2d");
 
-const speed = 10;
+const secPerLap = 10;
+let speed = 0;
 const padding = 50;
 const size = 100;
 const color = "green";
@@ -26,6 +27,7 @@ function reset() {
   };
   char.xarea = [padding, canvas.width - padding - char.width];
   char.yarea = [padding, canvas.height - padding - char.height];
+  speed = (2 * (char.xarea[1] + char.yarea[1] - char.xarea[0] - char.yarea[0])) / (60 * secPerLap);
   char.xspeed = speed;
 }
 window.addEventListener("resize", reset);
