@@ -1,14 +1,16 @@
 const canvas = document.querySelector("canvas#canvas");
 const ctx = canvas.getContext("2d");
 
-const secPerLap = 10;
-let speed = 0;
-const padding = 50;
-const size = 100;
-const color = "green";
+let secPerLap = 10;
+let speed;
+let padding = 50;
+let size = 100;
+let color = "green";
 
 const bodypadding = 25;
 let char;
+let lapText;
+let timerText;
 function reset() {
   canvas.width = window.innerWidth - bodypadding * 2;
   canvas.height = window.innerHeight - bodypadding * 2;
@@ -27,11 +29,46 @@ function reset() {
   };
   char.xarea = [padding, canvas.width - padding - char.width];
   char.yarea = [padding, canvas.height - padding - char.height];
-  speed = (2 * (char.xarea[1] + char.yarea[1] - char.xarea[0] - char.yarea[0])) / (60 * secPerLap);
+  speed = (2 * (char.xarea[1] + char.yarea[1] - char.xarea[0] - char.yarea[0])) / (60 * secPerLap + 8);
   char.xspeed = speed;
+
+  lapText = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    innerText: "",
+    font: "bold 72px serif",
+    color: "black",
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.font = this.font;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "bottom";
+      ctx.fillText(this.innerText, this.x, this.y);
+    },
+  };
+  lapText.innerText = "0";
+  timerText = {
+    x: canvas.width / 2,
+    y: canvas.height / 2 + 10,
+    innerText: "",
+    font: "48px serif",
+    color: "gray",
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.font = this.font;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      ctx.fillText(this.innerText, this.x, this.y);
+    },
+  };
+  timerText.innerText = "0";
 }
 window.addEventListener("resize", reset);
+window.addEventListener("click", reset);
 reset();
+
+let prevTime = new Date().getTime();
+let time;
 
 function main() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -57,6 +94,18 @@ function main() {
     char.y = char.yarea[0];
     char.yspeed = 0;
     char.xspeed = speed;
+    lapText.innerText = String(parseInt(lapText.innerText) + 1);
+    time = new Date().getTime();
+    console.log(time - prevTime);
+    prevTime = time;
   }
+
+  lapText.draw();
+  timerText.draw();
 }
+function perSec() {
+  timerText.innerText = String(parseInt(timerText.innerText) + 1);
+}
+
 setInterval(main, 1000 / 60);
+setInterval(perSec, 1000);
