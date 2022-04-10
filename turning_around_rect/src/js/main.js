@@ -37,7 +37,7 @@ function reset() {
     x: canvas.width / 2,
     y: canvas.height / 2,
     innerText: "",
-    font: "bold 72px serif",
+    font: "bold 72px mono",
     color: "black",
     draw() {
       ctx.fillStyle = this.color;
@@ -52,7 +52,7 @@ function reset() {
     x: canvas.width / 2,
     y: canvas.height / 2 + 10,
     innerText: "",
-    font: "48px serif",
+    font: "48px mono",
     color: "gray",
     draw() {
       ctx.fillStyle = this.color;
@@ -67,7 +67,7 @@ function reset() {
     x: canvas.width / 2,
     y: canvas.height / 2 - 75,
     innerText: "",
-    font: "32px serif",
+    font: "32px mono",
     color: "gray",
     draw() {
       ctx.fillStyle = this.color;
